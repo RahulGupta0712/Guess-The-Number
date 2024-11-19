@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #ffffff;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1, h2 {
+            margin: 0.5em 0;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        form {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        label {
+            display: block;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input[type="number"] {
+            width: 90%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 1em;
+            background-color: #f7f7f7;
+            color: #333;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            background-color: #6a11cb;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #2575fc;
+        }
+
+        #result, #timer {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        #result {
+            color: #3ff86a;
+        }
+
+        #timer {
+            color: #00ffcc;
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.7);
+        }
+    </style>
+
+</head>
+
+ <!-- Comments  -->
+ <!-- Body Tag -->
+<body>
+    <h1>🎉<u>Guess The Number Game</u>🎉</h1>
+    <h2><i>Hello Moto</i></h2>
+    <p>Guess any number between <strong>1 and 100</strong> in <strong>6</strong> moves</p>
+    <form id="form1" onsubmit="return false;">
+        <label for="number">Number:</label>
+        <input type="number" id="num" name="username" placeholder="Guess Number">
+        
+        <input type="submit" value="Submit" onclick = "checkLessOrGreater()">
+    </form>
+    <p id = "result"></p>
+    <p id="timer"></p>
+    
+    <a href="https://www.nytimes.com/games/wordle/index.html" target="_main">Wordle</a>
+    <a href = "/hello.html">Learn more</a>
+    <a href = "/portfolio.html">Creator</a><br>
+    <footer>
+        &copy; 2024 Guess Game Inc. | Designed with 💖
+    </footer>
+
+    <script>
+        let randomNumber = Math.floor(Math.random() * 100) + 1;
+        let moves = 0;
+
+        function checkLessOrGreater(){
+            const userInput = parseInt(document.getElementById("num").value, 10);
+            const resultElement = document.getElementById("result");
+            const timerElement = document.getElementById("timer");
+            
+            moves++;
+            
+            if (isNaN(userInput) || userInput < 1 || userInput > 100) {
+                resultElement.textContent = "Please enter a valid number between 1 and 100.";
+                resultElement.style.color = "red";
+                return;
+            }
+
+            if (moves >= 6) {
+                randomNumber = Math.floor(Math.random() * 100) + 1; // Reset random number
+                moves = 0; // Reset moves counter
+                resultElement.textContent = "❗ Max Moves reached! The number was " + randomNumber + ".";
+                resultElement.style.color = "red";
+                
+                setTimeout(function() {
+                    // Reset the form submission logic to allow submission
+                    document.getElementById("form1").onsubmit = function () {
+                        return true; // Enable form submission
+                    };
+
+                    // Now submit the form
+                    document.getElementById("form1").submit(); // Submit the form after 1 second
+                }, 1000); 
+
+                return; // Don't process any further guesses
+            }
+            
+            
+            if (userInput < randomNumber) {
+                resultElement.textContent = "Your guess is too low! Increase your number";
+                resultElement.style.color = "yellow";
+            } else if (userInput > randomNumber) {
+                resultElement.textContent = "Your guess is too high! Decrease your number";
+                resultElement.style.color = "orange";
+            } else {
+                resultElement.textContent = "Congratulations! You guessed the correct number!";
+                resultElement.style.color = "#00ff00";
+
+                // Start the countdown
+                let countdown = 3;
+                timerElement.textContent = `Refreshing in ${countdown}...`;
+                const interval = setInterval(() => {
+                    countdown--;
+                    if (countdown === 0) {
+                        clearInterval(interval);
+                        document.getElementById("form1").onsubmit = function () {
+                            return true;
+                        };
+                        document.getElementById("form1").submit(); // Submit the form
+                    } else {
+                        timerElement.textContent = `Refreshing in ${countdown}...`;
+                    }
+                }, 1000);
+            }    
+        }
+    
+    </script>
+
+</body>
+</html>
