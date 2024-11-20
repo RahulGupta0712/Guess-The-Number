@@ -117,16 +117,13 @@
         let moves = 0;
 
         function checkLessOrGreater(){
-            const timerElement = document.getElementById("timer");
-            timerElement.textContent = `${randomNumber}`;
             if (typeof randomNumber === "undefined") {
                 randomNumber = Math.floor(Math.random() * 100) + 1;
-                timerElement.textContent = `${randomNumber}`;
             }
             
             const userInput = parseInt(document.getElementById("num").value, 10);
             const resultElement = document.getElementById("result");
-            
+            const timerElement = document.getElementById("timer");
             
             moves++;
             
@@ -137,11 +134,11 @@
             }
 
             if (moves >= 6) {
-                randomNumber = Math.floor(Math.random() * 100) + 1; // Reset random number
-                timerElement.textContent = `${randomNumber}`;
                 moves = 0; // Reset moves counter
                 resultElement.textContent = "❗ Max Moves reached! The number was " + randomNumber + ".";
                 resultElement.style.color = "red";
+
+                randomNumber = Math.floor(Math.random() * 100) + 1; // Reset random number
                 
                 setTimeout(function() {
                     // Reset the form submission logic to allow submission
