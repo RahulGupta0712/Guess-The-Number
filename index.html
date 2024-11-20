@@ -125,11 +125,10 @@
             const resultElement = document.getElementById("result");
             const timerElement = document.getElementById("timer");
             
-            moves++;
-            
             if (isNaN(userInput) || userInput < 1 || userInput > 100) {
                 resultElement.textContent = "Please enter a valid number between 1 and 100.";
                 resultElement.style.color = "red";
+                moves++;
                 return;
             }
 
@@ -152,7 +151,8 @@
 
                 return; // Don't process any further guesses
             }
-            
+
+            moves++;            
             
             if (userInput < randomNumber) {
                 resultElement.textContent = "Your guess is too low! Increase your number";
