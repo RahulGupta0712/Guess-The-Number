@@ -135,26 +135,6 @@
                 return;
             }
 
-            if (moves >= 6) {
-                moves = 0; // Reset moves counter
-                resultElement.textContent = "❗ Max Moves reached! The number was " + randomNumber + ".";
-                resultElement.style.color = "red";
-
-                randomNumber = Math.floor(Math.random() * 100) + 1; // Reset random number
-                
-                setTimeout(function() {
-                    // Reset the form submission logic to allow submission
-                    document.getElementById("form1").onsubmit = function () {
-                        return true; // Enable form submission
-                    };
-
-                    // Now submit the form
-                    document.getElementById("form1").submit(); // Submit the form after 1 second
-                }, 1000); 
-
-                return; // Don't process any further guesses
-            }
-
             moves++;            
             
             if (userInput < randomNumber) {
@@ -183,6 +163,24 @@
                     }
                 }, 1000);
             }    
+
+            if (moves === 6) {
+                moves = 0; // Reset moves counter
+                resultElement.textContent = "❗ Max Moves reached! The number was " + randomNumber + ".";
+                resultElement.style.color = "red";
+
+                randomNumber = Math.floor(Math.random() * 100) + 1; // Reset random number
+                
+                setTimeout(function() {
+                    // Reset the form submission logic to allow submission
+                    document.getElementById("form1").onsubmit = function () {
+                        return true; // Enable form submission
+                    };
+
+                    // Now submit the form
+                    document.getElementById("form1").submit(); // Submit the form after 1 second
+                }, 1000); 
+            }
         }
     
     </script>
