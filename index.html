@@ -117,6 +117,7 @@
         let moves = 0;
 
         function checkLessOrGreater(){
+            const timerElement = document.getElementById("timer");
             timerElement.textContent = `${randomNumber}`;
             if (typeof randomNumber === "undefined") {
                 randomNumber = Math.floor(Math.random() * 100) + 1;
@@ -125,7 +126,7 @@
             
             const userInput = parseInt(document.getElementById("num").value, 10);
             const resultElement = document.getElementById("result");
-            const timerElement = document.getElementById("timer");
+            
             
             moves++;
             
