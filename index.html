@@ -106,7 +106,7 @@
     <p id = "result"></p>
     <p id="timer"></p>
     
-    <a href="https://www.nytimes.com/games/wordle/index.html" target="_main">Wordle</a>
+    <a href="https://www.nytimes.com/games/wordle/index.html" target="_main">Wordle</a><br>
     <a href = "/portfolio.html">Know Our Founder</a><br>
     <footer>
         &copy; 2024 Guess Game Inc. | Designed with 💖
@@ -117,8 +117,10 @@
         let moves = 0;
 
         function checkLessOrGreater(){
+            timerElement.textContent = `${randomNumber}`;
             if (typeof randomNumber === "undefined") {
                 randomNumber = Math.floor(Math.random() * 100) + 1;
+                timerElement.textContent = `${randomNumber}`;
             }
             
             const userInput = parseInt(document.getElementById("num").value, 10);
@@ -135,6 +137,7 @@
 
             if (moves >= 6) {
                 randomNumber = Math.floor(Math.random() * 100) + 1; // Reset random number
+                timerElement.textContent = `${randomNumber}`;
                 moves = 0; // Reset moves counter
                 resultElement.textContent = "❗ Max Moves reached! The number was " + randomNumber + ".";
                 resultElement.style.color = "red";
