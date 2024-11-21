@@ -104,7 +104,7 @@
     <form id="form1" onsubmit="return false;">
         <label for="number">Number:</label>
         <input type="number" id="num" name="username" placeholder="Guess Number">
-        
+        <p id="moves">Moves left: 6</p>
         <input type="submit" value="Submit" onclick = "checkLessOrGreater()">
     </form>
     <p id = "result"></p>
@@ -127,42 +127,45 @@
             const userInput = parseInt(document.getElementById("num").value, 10);
             const resultElement = document.getElementById("result");
             const timerElement = document.getElementById("timer");
+            const movesElement = document.getElementById("moves");
             
             if (isNaN(userInput) || userInput < 1 || userInput > 100) {
                 resultElement.textContent = "Please enter a valid number between 1 and 100.";
                 resultElement.style.color = "red";
                 moves++;
-                return;
+                movesElement.textContent='Moves Left: ' + (6-moves);
             }
-
-            moves++;            
-            
-            if (userInput < randomNumber) {
-                resultElement.textContent = "Your guess is too low! Increase your number";
-                resultElement.style.color = "yellow";
-            } else if (userInput > randomNumber) {
-                resultElement.textContent = "Your guess is too high! Decrease your number";
-                resultElement.style.color = "orange";
-            } else {
-                resultElement.textContent = "Congratulations! You guessed the correct number!";
-                resultElement.style.color = "#00ff00";
-
-                // Start the countdown
-                let countdown = 3;
-                timerElement.textContent = `Refreshing in ${countdown}...`;
-                const interval = setInterval(() => {
-                    countdown--;
-                    if (countdown === 0) {
-                        clearInterval(interval);
-                        document.getElementById("form1").onsubmit = function () {
-                            return true;
-                        };
-                        document.getElementById("form1").submit(); // Submit the form
-                    } else {
-                        timerElement.textContent = `Refreshing in ${countdown}...`;
-                    }
-                }, 1000);
-                return;
+            else{
+                moves++;      
+                movesElement.textContent='Moves Left: ' + (6-moves);
+                
+                if (userInput < randomNumber) {
+                    resultElement.textContent = "Your guess is too low! Increase your number";
+                    resultElement.style.color = "yellow";
+                } else if (userInput > randomNumber) {
+                    resultElement.textContent = "Your guess is too high! Decrease your number";
+                    resultElement.style.color = "orange";
+                } else {
+                    resultElement.textContent = "Congratulations! You guessed the correct number!";
+                    resultElement.style.color = "#00ff00";
+    
+                    // Start the countdown
+                    let countdown = 3;
+                    timerElement.textContent = `Refreshing in ${countdown}...`;
+                    const interval = setInterval(() => {
+                        countdown--;
+                        if (countdown === 0) {
+                            clearInterval(interval);
+                            document.getElementById("form1").onsubmit = function () {
+                                return true;
+                            };
+                            document.getElementById("form1").submit(); // Submit the form
+                        } else {
+                            timerElement.textContent = `Refreshing in ${countdown}...`;
+                        }
+                    }, 1000);
+                    return;
+                }   
             }    
 
             if (moves === 6) {
